@@ -1,12 +1,23 @@
 import React, { useState } from 'react';
 
-const ReservationForm = () => {
+const ReservationForm = ({ addReservation }) => {
   const [formData, setFormData] = useState({
     name: '',
     date: '',
     time: '',
     guests: '',
   });
+
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const clearInput = () => {
+    setFormData({
+      name: '',
+      date: '',
+      time: '',
+      guests: '',
+    });
+  };
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -18,65 +29,59 @@ const ReservationForm = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    // Check if all fields are filled out
     const { name, date, time, guests } = formData;
     if (name && date && time && guests) {
-      // Process form submission
       console.log('Form submitted:', formData);
-      // You can perform further actions like API calls here
+      addReservation(formData);
+      clearInput();
     } else {
-      alert('Please fill out all fields');
+      setErrorMessage('Please fill out all fields');
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Name:
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <br />
-      <label>
-        Date:
-        <input
-          type="date"
-          name="date"
-          value={formData.date}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <br />
-      <label>
-        Time:
-        <input
-          type="time"
-          name="time"
-          value={formData.time}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <br />
-      <label>
-        Number of Guests:
-        <input
-          type="number"
-          name="guests"
-          value={formData.guests}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <br />
-      <button type="submit">Submit</button>
-    </form>
+    <div>
+      {errorMessage && <p>{errorMessage}</p>}
+      <form onSubmit={handleSubmit}>
+        <label>
+          Name:
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+          />
+        </label>
+        <label>
+          Date:
+          <input
+            type="date"
+            name="date"
+            value={formData.date}
+            onChange={handleChange}
+          />
+        </label>
+        <label>
+          Time:
+          <input
+            type="time"
+            name="time"
+            value={formData.time}
+            onChange={handleChange}
+          />
+        </label>
+        <label>
+          Number of Guests:
+          <input
+            type="number"
+            name="guests"
+            value={formData.guests}
+            onChange={handleChange}
+          />
+        </label>
+        <button type="submit">Make Reservation</button>
+      </form>
+    </div>
   );
 };
 
