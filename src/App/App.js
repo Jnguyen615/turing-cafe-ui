@@ -27,8 +27,8 @@ function App() {
 
   const addReservation = newReservation => {
     const updatedReservations = [...reservations, newReservation];
-    setReservations(updatedReservations)
-    console.log("New Reservation:", newReservation)
+    setReservations(updatedReservations);
+    console.log('New Reservation:', newReservation);
   };
 
   useEffect(() => {
@@ -38,7 +38,7 @@ function App() {
   return (
     <div className="App">
       <h1 className="app-title">Turing Cafe Reservations</h1>
-      <ReservationForm  addReservation={addReservation}/>
+      <ReservationForm addReservation={addReservation} />
       <Reservations reservations={reservations} />
     </div>
   );

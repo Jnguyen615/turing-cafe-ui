@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import './ReservationForm.css';
 
 const ReservationForm = ({ addReservation }) => {
   const [formData, setFormData] = useState({
     name: '',
     date: '',
     time: '',
-    guests: '',
+    number: '',
   });
 
   const [errorMessage, setErrorMessage] = useState('');
@@ -15,7 +16,7 @@ const ReservationForm = ({ addReservation }) => {
       name: '',
       date: '',
       time: '',
-      guests: '',
+      number: '',
     });
   };
 
@@ -29,8 +30,8 @@ const ReservationForm = ({ addReservation }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    const { name, date, time, guests } = formData;
-    if (name && date && time && guests) {
+    const { name, date, time, number } = formData;
+    if (name && date && time && number) {
       console.log('Form submitted:', formData);
       addReservation(formData);
       clearInput();
@@ -44,42 +45,44 @@ const ReservationForm = ({ addReservation }) => {
       {errorMessage && <p>{errorMessage}</p>}
       <form onSubmit={handleSubmit}>
         <label>
-          Name:
           <input
             type="text"
             name="name"
+            placeholder="Name"
             value={formData.name}
             onChange={handleChange}
           />
         </label>
         <label>
-          Date:
           <input
-            type="date"
+            type="text"
             name="date"
+            placeholder="Date (mm/dd)"
             value={formData.date}
             onChange={handleChange}
           />
         </label>
         <label>
-          Time:
           <input
-            type="time"
+            type="text"
             name="time"
+            placeholder="Time"
             value={formData.time}
             onChange={handleChange}
           />
         </label>
         <label>
-          Number of Guests:
           <input
-            type="number"
-            name="guests"
-            value={formData.guests}
+            type="text"
+            name="number"
+            placeholder="Number of Guests"
+            value={formData.number}
             onChange={handleChange}
           />
         </label>
-        <button type="submit">Make Reservation</button>
+        <button className="make-reservaion-btn" type="submit">
+          Make Reservation
+        </button>
       </form>
     </div>
   );

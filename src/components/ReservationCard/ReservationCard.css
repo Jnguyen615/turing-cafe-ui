@@ -3,11 +3,11 @@
   background-color: white;
   border-radius: 5px;
   width: 17vw;
-  height: 19vh
+  height: 19vh;
 }
- 
-button {
+
+.cancel-btn {
   background-color: rgb(4, 163, 163);
   width: 75%;
-  height: 15%
+  height: 15%;
 }

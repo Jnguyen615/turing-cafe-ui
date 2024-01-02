@@ -14,12 +14,8 @@ const Reservations = ({ reservations }) => {
       />
     );
   });
-  
-  return (
-    <div className='reservation-container'>
-      {reservationCards}
-    </div>
-  );
+
+  return <div className="reservation-container">{reservationCards}</div>;
 };
 
 export default Reservations;
