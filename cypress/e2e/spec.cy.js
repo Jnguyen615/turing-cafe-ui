@@ -55,33 +55,44 @@ describe('visit main page', () => {
   });
 
   it('should add a new reservation', () => {
+    cy.intercept('POST', 'http://localhost:3001/api/v1/reservations', {
+      statusCode: 201,
+      fixture: 'postData',
+    }).as('postReservation');
+
     cy.get(':nth-child(1) > input')
       .type('Jenny')
-      .should('have.value', "Jenny")
+      .should('have.value', 'Jenny')
       .get(':nth-child(2) > input')
       .type('1/4')
-      .should('have.value', "1/4")
+      .should('have.value', '1/4')
       .get(':nth-child(3) > input')
       .type('6:30')
-      .should('have.value', "6:30")
+      .should('have.value', '6:30')
       .get(':nth-child(4) > input')
       .type('4')
-      .should('have.value', "4")
-    cy.get("form > button").click()
-    cy.get('.reservation-container > :nth-child(10)')
-      .last()
-      .contains('h2', 'Jenny')
-      .get('.reservation-container > :nth-child(10)')
-      .last()
-      .contains('p', 'Date: 1/4')
-      .get('.reservation-container > :nth-child(10)')
-      .last()
-      .contains('p', 'Time: 6:30')
-      .get('.reservation-container > :nth-child(10)')
-      .last()
-      .contains('p', 'Number of Guests: 4')
-      .get('.reservation-container')
-      .children()
-      .should('have.length', 10);
+      .should('have.value', '4');
+
+    cy.get('form > button').click();
+
+    cy.wait('@postReservation').then(() => {
+      cy.get('.reservation-container > :nth-child(10)')
+        .last()
+        .contains('h2', 'Jenny')
+        .get('.reservation-container > :nth-child(10)')
+        .last()
+        .contains('p', 'Date: 1/4')
+        .get('.reservation-container > :nth-child(10)')
+        .last()
+        .contains('p', 'Time: 6:30')
+        .get('.reservation-container > :nth-child(10)')
+        .last()
+        .contains('p', 'Number of Guests: 4')
+        .get('.reservation-container')
+        .children()
+        .should('have.length', 10);
+    });
   });
 });
+      
+ 
