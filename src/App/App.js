@@ -6,7 +6,7 @@ import ReservationForm from '../components/ReservationForm/ReservationForm';
 
 function App() {
   const [reservations, setReservations] = useState([]);
-  const [error, setError] = useState('')
+  const [error, setError] = useState('');
 
   const getReservations = () => {
     fetch('http://localhost:3001/api/v1/reservations')
@@ -26,29 +26,32 @@ function App() {
       });
   };
 
-  const postReservation = (newReservation) => {
-    return fetch("http://localhost:3001/api/v1/reservations", {
-      method: 'POST', 
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newReservation),
-    })
-    .then(response => {
+  const postReservation = async newReservation => {
+    try {
+      const response = await fetch(
+        'http://localhost:3001/api/v1/reservations',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newReservation),
+        },
+      );
       if (!response.ok) {
         throw new Error(`${response.status} ${response.statusText}`);
       }
       console.log(response);
-      return response.json();
-      })
-      .catch((error) => setError(error.message));
+      return await response.json();
+    } catch (error) {
+      return setError(error.message);
     }
-
+  };
 
   const addReservation = newReservation => {
     const updatedReservations = [...reservations, newReservation];
     setReservations(updatedReservations);
-    postReservation(newReservation)
+    postReservation(newReservation);
   };
 
   useEffect(() => {

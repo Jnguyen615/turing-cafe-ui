@@ -80,7 +80,7 @@ const ReservationForm = ({ addReservation }) => {
             onChange={handleChange}
           />
         </label>
-        <button className="make-reservaion-btn" type="submit">
+        <button className="make-reservation-btn" type="submit">
           Make Reservation
         </button>
       </form>
